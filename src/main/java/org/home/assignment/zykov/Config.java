@@ -14,6 +14,7 @@ public class Config {
     public  Map<String, SameSymbol> win_combinations;
 
 
+
     public static void main(String[] args) {
         Config config = null;
         try {
@@ -21,7 +22,7 @@ public class Config {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println(config.win_combinations.get("same_symbols_horizontally").reward_multiplier);
+        System.out.println(config.columns);
     }
 
 
@@ -29,7 +30,8 @@ public class Config {
     public static Config fromFile(String configFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         configFile = "c:\\Users\\Lenovo\\personal\\test-game\\src\\main\\resources\\config.json";
-        return mapper.readValue(new File(configFile), Config.class);
+        Config config = mapper.readValue(new File(configFile), Config.class);
+        return config;
     }
 
     public static class BonusSymbols {

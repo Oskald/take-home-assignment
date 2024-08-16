@@ -21,7 +21,6 @@ class WinCalculator {
         Map<String, List<String>> appliedWinningCombinations = new HashMap<>();
         String appliedBonusSymbol = null;
 
-        // 1. Проверка выигрышных комбинаций
         for (Map.Entry<String, Config.SameSymbol> entry : config.win_combinations.entrySet()) {
             String combinationName = entry.getKey();
             Config.SameSymbol winCondition = entry.getValue();
@@ -33,7 +32,6 @@ class WinCalculator {
             }
         }
 
-        // 2. Применение бонусных символов
         appliedBonusSymbol = applyBonusSymbols(totalReward);
         if (appliedBonusSymbol != null) {
             Config.Symbol bonus = config.symbols.get(appliedBonusSymbol);
@@ -42,7 +40,6 @@ class WinCalculator {
             } else if (bonus.impact == Config.SymbolImpact.extra_bonus) {
                 totalReward += bonus.extra;
             }
-            // Если бонус `MISS`, он не оказывает эффекта и игнорируется
         }
 
         return new GameResult(matrix, totalReward, appliedWinningCombinations, appliedBonusSymbol);
@@ -51,7 +48,6 @@ class WinCalculator {
     private int processSameSymbols(Config.SameSymbol winCondition, String combinationName, Map<String, List<String>> appliedWinningCombinations) {
         Map<String, Integer> symbolCounts = new HashMap<>();
 
-        // Подсчет количества каждого символа в матрице
         for (int row = 0; row < config.rows; row++) {
             for (int col = 0; col < config.columns; col++) {
                 String symbol = matrix[row][col];
@@ -61,7 +57,6 @@ class WinCalculator {
 
         int totalReward = 0;
 
-        // Проверка, если количество какого-либо символа соответствует выигрышному условию
         for (Map.Entry<String, Integer> entry : symbolCounts.entrySet()) {
             String symbol = entry.getKey();
             int count = entry.getValue();
