@@ -167,7 +167,7 @@ class WinCalculator {
 
     private int calculateBonuses(int totalReward, Config.Symbol bonusSymbol) {
         if (bonusSymbol.impact.equals(Config.SymbolImpact.multiply_reward)) {
-            totalReward = totalReward * bonusSymbol.reward_multiplier;
+            totalReward = Double.valueOf(totalReward * bonusSymbol.reward_multiplier).intValue();
         } else if (bonusSymbol.impact.equals(Config.SymbolImpact.extra_bonus)) {
             totalReward += bonusSymbol.extra;
         }
@@ -268,19 +268,6 @@ class WinCalculator {
         return Arrays.stream(matrix)
                 .flatMap(Arrays::stream)
                 .collect(Collectors.groupingBy(it -> it, Collectors.counting()));
-    }
-
-    public static void main(String[] args) throws JsonProcessingException {
-        Config cfg = null;
-        try {
-            cfg = Config.fromFile("");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        String[][] matrix = new String[][]{{"F", "F", "F"}, {"+500", "F", "E"}, {"F", "E", "D"}};
-        WinCalculator winCalculator = new WinCalculator(cfg, matrix, 100);
-        GameResult gameResult = winCalculator.calculate();
-        printResult(gameResult);
     }
 
     private static void printResult(GameResult result) throws JsonProcessingException {

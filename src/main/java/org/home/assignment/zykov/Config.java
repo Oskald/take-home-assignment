@@ -15,23 +15,9 @@ public class Config {
 
 
 
-    public static void main(String[] args) {
-        Config config = null;
-        try {
-            config = fromFile("");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(config.rows);
-    }
-
-
-
     public static Config fromFile(String configFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        configFile = "c:\\Users\\Lenovo\\personal\\test-game\\take-home-assignment\\src\\main\\resources\\config.json";
-        Config config = mapper.readValue(new File(configFile), Config.class);
-        return config;
+        return mapper.readValue(new File(configFile), Config.class);
     }
 
     public static class CommonSymbols {
@@ -72,7 +58,7 @@ public class Config {
     }
 
     public static class Symbol {
-        public int reward_multiplier;
+        public double reward_multiplier;
         public int extra;
         public SymbolType type;
         public SymbolImpact impact;
