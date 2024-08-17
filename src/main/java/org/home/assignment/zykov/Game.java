@@ -23,7 +23,7 @@ public class Game {
 
             GameResult result = playGame(configFilePath, betAmount);
 
-            pringResult(result);
+            printResult(result);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class Game {
         return game.play();
     }
 
-    private static void pringResult(GameResult result) throws JsonProcessingException {
+    private static void printResult(GameResult result) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(result);
 
@@ -66,16 +66,25 @@ public class Game {
     }
 
     private static void showMatrix(String[][] matrix) {
-        int i =0;
-        System.out.println("\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2564  SLOT MACHINE  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
+        int i = 0;
+        int cellWidth = 7;
+
+        System.out.println("╔" + "═".repeat(cellWidth) +
+                ("╤" + "═".repeat(cellWidth)).repeat(matrix.length - 1) +
+                "╗");
+
         for (String[] strings : matrix) {
-            System.out.println("\u2551 " + Arrays.stream(strings).map(it -> String.format("%-6s", it)).collect(Collectors.joining("\u2502 ")) + " \u2551");
-            if(i<matrix.length-1) {
+            System.out.println("║ " + Arrays.stream(strings).map(it -> String.format("%-6s", it)).collect(Collectors.joining("│ ")) + "║");
+            if (i < matrix.length - 1) {
                 ++i;
-                System.out.println("\u255F\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562");
+                System.out.println("╟" + "─".repeat(cellWidth) +
+                        ("┼" + "─".repeat(cellWidth)).repeat(matrix.length - 1) +
+                        "╢");
             }
         }
-        System.out.println("\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2567\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2567\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2567\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D");
+        System.out.println("╚" + "═".repeat(cellWidth) +
+                ("╧" + "═".repeat(cellWidth)).repeat(matrix.length - 1) +
+                "╝");
 
     }
 }

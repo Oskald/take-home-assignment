@@ -22,20 +22,23 @@ public class Config {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println(config.columns);
+        System.out.println(config.rows);
     }
 
 
 
     public static Config fromFile(String configFile) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        configFile = "c:\\Users\\Lenovo\\personal\\test-game\\src\\main\\resources\\config.json";
+        configFile = "c:\\Users\\Lenovo\\personal\\test-game\\take-home-assignment\\src\\main\\resources\\config.json";
         Config config = mapper.readValue(new File(configFile), Config.class);
         return config;
     }
 
-    public static class BonusSymbols {
+    public static class CommonSymbols {
         public Map<String, Integer> symbols;
+    }
+
+    public static class BonusSymbols extends CommonSymbols{
     }
 
     public static class Probabilities {
@@ -43,18 +46,29 @@ public class Config {
         public BonusSymbols bonus_symbols;
     }
 
+    public enum SameSymbolType {
+        same_symbols, linear_symbols
+    }
+
+    public enum SameSymbolSubType {
+        same_symbols,
+        horizontally_linear_symbols,
+        vertically_linear_symbols,
+        ltr_diagonally_linear_symbols,
+        rtl_diagonally_linear_symbols
+    }
+
     public static class SameSymbol {
-        public int reward_multiplier;
-        public String when;
+        public double reward_multiplier;
+        public SameSymbolType when;
         public int count;
-        public String group;
+        public SameSymbolSubType group;
         public List<List<String>> covered_areas;
     }
 
-    public static class StandardSymbol {
+    public static class StandardSymbol extends CommonSymbols {
         public int column;
         public int row;
-        public Map<String, Integer> symbols;
     }
 
     public static class Symbol {
