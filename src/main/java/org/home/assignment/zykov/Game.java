@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static org.home.assignment.zykov.ArgsBuilder.getArgs;
+
 public class Game {
     private final Config config;
     private final int betAmount;
@@ -18,8 +20,9 @@ public class Game {
 
     public static void main(String[] args) {
         try {
-            String configFilePath = "c:\\Users\\Lenovo\\personal\\test-game\\src\\main\\resources\\config.json"; // заменить на args[0]
-            int betAmount = 100;
+            Tuple<String, Integer> parsedArgs = getArgs(args);
+            String configFilePath = parsedArgs.first;
+            int betAmount = parsedArgs.second;
 
             GameResult result = playGame(configFilePath, betAmount);
 
